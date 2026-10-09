@@ -1,0 +1,133 @@
+[
+  {
+    "N": 1000000000,
+    "log10_N": 9,
+    "n_P3": 6014,
+    "n_P1": 19005,
+    "odd_powerful_total": 25019,
+    "checksum_P3": 778954,
+    "checksum_P1": 993939,
+    "candidates_n_and_n_plus_2": [
+      130576327
+    ],
+    "triples_found": [],
+    "t_generate_s": 0.002,
+    "t_intersect_s": 0.001,
+    "t_middle_test_s": 0.0
+  },
+  {
+    "N": 10000000000,
+    "log10_N": 10,
+    "n_P3": 19196,
+    "n_P1": 60291,
+    "odd_powerful_total": 79487,
+    "checksum_P3": 203117,
+    "checksum_P1": 956283,
+    "candidates_n_and_n_plus_2": [
+      130576327
+    ],
+    "triples_found": [],
+    "t_generate_s": 0.007,
+    "t_intersect_s": 0.003,
+    "t_middle_test_s": 0.0
+  },
+  {
+    "N": 100000000000,
+    "log10_N": 11,
+    "n_P3": 61102,
+    "n_P1": 191061,
+    "odd_powerful_total": 252163,
+    "checksum_P3": 347589,
+    "checksum_P1": 388290,
+    "candidates_n_and_n_plus_2": [
+      130576327
+    ],
+    "triples_found": [],
+    "t_generate_s": 0.019,
+    "t_intersect_s": 0.006,
+    "t_middle_test_s": 0.0
+  },
+  {
+    "N": 1000000000000,
+    "log10_N": 12,
+    "n_P3": 194090,
+    "n_P1": 605048,
+    "odd_powerful_total": 799138,
+    "checksum_P3": 549376,
+    "checksum_P1": 394260,
+    "candidates_n_and_n_plus_2": [
+      130576327
+    ],
+    "triples_found": [],
+    "t_generate_s": 0.038,
+    "t_intersect_s": 0.019,
+    "t_middle_test_s": 0.0
+  },
+  {
+    "N": 10000000000000,
+    "log10_N": 13,
+    "n_P3": 615589,
+    "n_P1": 1915166,
+    "odd_powerful_total": 2530755,
+    "checksum_P3": 542367,
+    "checksum_P1": 334548,
+    "candidates_n_and_n_plus_2": [
+      130576327
+    ],
+    "triples_found": [],
+    "t_generate_s": 0.131,
+    "t_intersect_s": 0.081,
+    "t_middle_test_s": 0.0
+  },
+  {
+    "N": 100000000000000,
+    "log10_N": 14,
+    "n_P3": 1950636,
+    "n_P1": 6060286,
+    "odd_powerful_total": 8010922,
+    "checksum_P3": 376812,
+    "checksum_P1": 603261,
+    "candidates_n_and_n_plus_2": [
+      130576327,
+      13837575261123
+    ],
+    "triples_found": [],
+    "t_generate_s": 0.331,
+    "t_intersect_s": 0.204,
+    "t_middle_test_s": 0.0
+  },
+  {
+    "N": 1000000000000000,
+    "log10_N": 15,
+    "n_P3": 6177077,
+    "n_P1": 19172862,
+    "odd_powerful_total": 25349939,
+    "checksum_P3": 235499,
+    "checksum_P1": 591196,
+    "candidates_n_and_n_plus_2": [
+      130576327,
+      13837575261123
+    ],
+    "triples_found": [],
+    "t_generate_s": 0.938,
+    "t_intersect_s": 0.645,
+    "t_middle_test_s": 0.0
+  },
+  {
+    "N": 10000000000000000,
+    "log10_N": 16,
+    "n_P3": 19552057,
+    "n_P1": 60648440,
+    "odd_powerful_total": 80200497,
+    "checksum_P3": 136261,
+    "checksum_P1": 807023,
+    "candidates_n_and_n_plus_2": [
+      130576327,
+      13837575261123
+    ],
+    "triples_found": [],
+    "t_generate_s": 2.921,
+    "t_intersect_s": 2.383,
+    "t_middle_test_s": 0.0
+  }
+]
