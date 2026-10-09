@@ -31,6 +31,8 @@ C7  The Pell-orbit recurrence z_{k+1} = 14 z_k - z_{k-1} + 6, (z_0, z_1) = (-2, 
 
 from __future__ import annotations
 
+import _bootstrap  # noqa: F401  (puts <repo>/src on sys.path; write_result)
+
 import json
 import math
 import time
@@ -310,7 +312,6 @@ if __name__ == "__main__":
     res["c5"] = c5()
     res["c6"] = c6()
     res["c7"] = c7()
-    with open("results/exp04_literature_checks.json", "w", encoding="utf-8") as fh:
-        json.dump(res, fh, indent=2, default=str)
+    path = _bootstrap.write_result("exp04_literature_checks.json", res)
     print("")
-    print("wrote results/exp04_literature_checks.json")
+    print("wrote %s" % path)

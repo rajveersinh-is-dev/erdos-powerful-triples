@@ -17,6 +17,8 @@ powerful numbers generated and a checksum, so the run is auditable/reproducible.
 
 from __future__ import annotations
 
+import _bootstrap  # noqa: F401  (puts <repo>/src on sys.path; write_result)
+
 import json
 import sys
 import time
@@ -68,9 +70,8 @@ def main(bounds: list[int]) -> int:
             f"hit = {t_hit:6.2f}s  mid = {t_mid:6.2f}s  TRIPLES = {triples}"
         )
         del p3, p1, cand
-    with open("results/scale_search.json", "w", encoding="utf-8") as fh:
-        json.dump(rows, fh, indent=2)
-    print("wrote results/scale_search.json")
+    path = _bootstrap.write_result("scale_search.json", rows)
+    print("wrote %s" % path)
     return 0
 
 

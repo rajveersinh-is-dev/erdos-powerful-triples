@@ -23,7 +23,16 @@ python -m pip install "numpy>=1.24" "sympy>=1.12" "z3-solver>=4.12"
 The library itself has **no** required dependencies; `numpy`, `sympy` and `z3` are
 needed only for the experiments.
 
-All commands assume the repository root as the working directory.
+**No environment variable is needed.** Every script bootstraps `sys.path` itself
+(`tests/crossvalidate_generators.py` and the four experiment scripts insert
+`<repo>/src`), and experiment output is written to `<repo>/results/` regardless of the
+working directory you invoke them from. The commands below are shown from the
+repository root for convenience only.
+
+```powershell
+git clone https://github.com/rajveersinh-is-dev/erdos-powerful-triples.git
+cd erdos-powerful-triples
+```
 
 ---
 
@@ -172,8 +181,7 @@ Raw output: `results/exp04_literature_checks.json`.
 ## 6. The five independent search methods (small bounds)
 
 ```powershell
-$env:PYTHONPATH="src"
-python -c "import powerful_triples as pt; [print(f().as_dict()) for f in (lambda: pt.search_direct(200000), lambda: pt.search_generated(200000), lambda: pt.search_parameters(60,60,4000,4000), lambda: pt.search_modular(200000,36), lambda: pt.search_smt(40,12))]"
+python -c "import sys; sys.path.insert(0,'src'); import powerful_triples as pt; [print(f().as_dict()) for f in (lambda: pt.search_direct(200000), lambda: pt.search_generated(200000), lambda: pt.search_parameters(60,60,4000,4000), lambda: pt.search_modular(200000,36), lambda: pt.search_smt(40,12))]"
 ```
 
 Reproduced output (abridged):
