@@ -1,0 +1,36 @@
+{
+  "counterexample_343_49": {
+    "343": {
+      "factorization": "7^3",
+      "powerful": true
+    },
+    "392": {
+      "factorization": "2^3*7^2",
+      "powerful": true
+    },
+    "441": {
+      "factorization": "3^2*7^2",
+      "powerful": true
+    }
+  },
+  "counterexample_is_valid": true,
+  "counterexample_169_87": {
+    "169": {
+      "factorization": "13^2",
+      "powerful": true
+    },
+    "256": {
+      "factorization": "2^8",
+      "powerful": true
+    },
+    "343": {
+      "factorization": "7^3",
+      "powerful": true
+    }
+  },
+  "odd_d_lt_49_up_to_1e10": {},
+  "odd_d_scan_limit_N": 10000000000,
+  "odd_d_scan_seconds": 0.79,
+  "triples_up_to_1e10": [],
+  "triple_scan_seconds": 0.01
+}
