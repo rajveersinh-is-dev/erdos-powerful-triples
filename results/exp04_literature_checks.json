@@ -138,54 +138,55 @@
     ],
     "kmax": 2000,
     "largest_digits": 2287,
+    "recurrence_agrees": true,
     "checks": [
       [
-        "k=1",
-        0,
-        1,
-        false
-      ],
-      [
-        "k=1",
+        "recurrence index j=1 (power 1)",
         1,
         1,
         true
       ],
       [
-        "k=2",
-        5,
+        "recurrence index j=2 (power 3)",
         22,
-        false
+        22,
+        true
       ],
       [
-        "k=3",
-        22,
+        "recurrence index j=3 (power 5)",
         313,
-        false
+        313,
+        true
       ],
       [
-        "k=4",
-        83,
+        "recurrence index j=4 (power 7)",
         4366,
-        false
+        4366,
+        true
       ],
       [
-        "k=5",
-        313,
+        "recurrence index j=5 (power 9)",
         60817,
-        false
+        60817,
+        true
       ],
       [
-        "k=6",
-        1169,
+        "recurrence index j=6 (power 11)",
         847078,
-        false
+        847078,
+        true
       ],
       [
-        "k=7",
-        4366,
+        "recurrence index j=7 (power 13)",
         11798281,
-        false
+        11798281,
+        true
+      ],
+      [
+        "recurrence index j=8 (power 15)",
+        164328862,
+        164328862,
+        true
       ]
     ]
   }
