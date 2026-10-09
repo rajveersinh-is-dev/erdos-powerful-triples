@@ -12,8 +12,12 @@ its canonical b parameter is 1 or 3 mod 4 respectively.
 
 from __future__ import annotations
 
+import os
 import sys
 import time
+
+# Allow running straight from a fresh clone without setting PYTHONPATH.
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src"))
 
 from powerful_triples.predicates import canonical_decomposition, is_powerful_trial, powerful_leq
 from powerful_triples.scale import count_odd_powerful, generate_odd_powerful_class

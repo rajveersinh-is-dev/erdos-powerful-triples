@@ -18,6 +18,8 @@ PART B (a provable restricted family: the middle term a power of 2)
 
 from __future__ import annotations
 
+import _bootstrap  # noqa: F401  (puts <repo>/src on sys.path; write_result)
+
 import json
 import time
 
@@ -168,8 +170,7 @@ def part_b():
 if __name__ == "__main__":
     r = part_a()
     part_b()
-    with open("results/exp03_ap_and_powers2.json", "w", encoding="utf-8") as fh:
-        json.dump(r, fh, indent=2, default=str)
+    path = _bootstrap.write_result("exp03_ap_and_powers2.json", r)
     print("")
-    print("wrote results/exp03_ap_and_powers2.json")
+    print("wrote %s" % path)
     raise SystemExit(0)

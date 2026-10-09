@@ -25,6 +25,8 @@ What is actually computed here (all bounded, none of it a proof):
 
 from __future__ import annotations
 
+import _bootstrap  # noqa: F401  (puts <repo>/src on sys.path; write_result)
+
 import json
 import time
 
@@ -100,9 +102,8 @@ def main() -> int:
     print(f"odd-d APs violating the necessary condition (expect 0): {len(bad)}")
 
     out["elapsed_s"] = round(time.perf_counter() - t0, 2)
-    with open("results/exp02_aps.json", "w", encoding="utf-8") as fh:
-        json.dump(out, fh, indent=2, default=str)
-    print("wrote results/exp02_aps.json")
+    path = _bootstrap.write_result("exp02_aps.json", out)
+    print("wrote %s" % path)
     return 0
 
 
