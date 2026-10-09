@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "powerful-triples"
+version = "1.0.0"
+description = "Exact computational tools and verified partial results on the Erdos-Mollin-Walsh conjecture (three consecutive powerful numbers)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Anonymous" }]
+keywords = ["powerful numbers", "squarefull numbers", "abc conjecture", "Diophantine equations"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Mathematics",
+]
+dependencies = []
+
+[project.optional-dependencies]
+experiments = ["numpy>=1.24", "sympy>=1.12", "z3-solver>=4.12"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
