@@ -1,0 +1,657 @@
+% =====================================================================
+%  Three Consecutive Powerful Numbers: partial results, a failed
+%  strategy, and an exhaustive verification to 10^16
+%
+%  Companion to the repository erdos-powerful-triples.
+%  All claims carry explicit labels; PROVED claims have complete proofs.
+% =====================================================================
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\title{\bfseries Three Consecutive Powerful Numbers:\\
+a structural analysis, a falsified strategy,\\
+and an exhaustive verification to $10^{16}$}
+\author{Anonymous submission}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We investigate the Erdős--Mollin--Walsh conjecture that no three consecutive positive
+integers are all powerful (squarefull). The conjecture remains open; we do not settle
+it. What we do produce is (i) a complete and elementary characterisation of the
+\emph{local} constraints on such a triple, together with a proof that those constraints
+are simultaneously satisfiable at every modulus --- which certifies that no purely
+congruence argument can ever settle the problem; (ii) several unconditional structural
+theorems, including the exclusion of an infinite family of candidate triples whose
+middle term is a power of $4$; (iii) the falsification, with an explicit
+counterexample, of a natural and otherwise appealing strategy for the conjecture;
+(iv) an independent derivation of the mechanism behind the conditional $abc$ result,
+with the sharp exponent; and (v) an exhaustive, cross-validated search finding no
+triple below $10^{16}$. All proofs are self-contained except where a classical
+external theorem is named explicitly, and every claim is labelled.
+\end{abstract}
+
+\section{Introduction and the conjecture}
+
+\begin{definition}
+A positive integer $m$ is \emph{powerful} (or squarefull) if $p^2\mid m$ for every
+prime $p$ with $p\mid m$. We call $m$ powerful when its prime factorisation
+$m=\prod p^{e_p}$ satisfies $e_p\ge 2$ for all $p\mid m$.
+\end{definition}
+
+\begin{conjecture}[Erdős--Mollin--Walsh]
+There is no positive integer $n$ such that $n$, $n+1$ and $n+2$ are all powerful.
+\end{conjecture}
+
+The attribution chain has been verified (see \S\ref{sec:lit}) and differs from the
+version commonly repeated: the question originates in a remark of Golomb
+\cite{golomb1970}; it was raised by Erdős \cite{erdos1976cn}; and it was formulated
+independently by Mollin and Walsh \cite{mollinwalsh1986a,mollinwalsh1986b}. The
+frequently cited reference to Erdős, \emph{Publ.\ Math.\ Debrecen} \textbf{23}
+(1976), 271--282 concerns consecutive \emph{pairs}, not triples.
+
+\subsection{The $d_m$ reformulation}
+
+\begin{definition}\label{def:dm}
+For $m\ge 2$ put
+\[ d_m=\min\{\,d:\ \exists N\in\mathbb Z_{>0}\ \text{such that } N,N+d,\dots,N+(m-1)d \text{ are all powerful}\,\}.\]
+\end{definition}
+
+Clearly $d_2=1$, and $d_m$ is nondecreasing in $m$. By definition,
+\[
+\text{Erdős--Mollin--Walsh}\quad\Longleftrightarrow\quad d_3>1.
+\]
+Bajpai, Bennett and Chan \cite{bajpai2024} compute that $d_3=24$ is attained at
+$N=1$, and conjecture $d_m=\prod_{p\le m}p^2$ for $m\ge4$; they prove
+$\prod_{p\le m/2}p\mid d_m$ for $m\ge4$. We reproduce the witness $(1,25,49)$
+computationally (\S\ref{sec:comp}). Note that no analogue of
+$\prod_{p\le m/2}p\mid d_m$ is available at $m=3$, where the condition would be
+$p\le 3/2$.
+
+\subsection{What is known, and what is not}
+
+Pairs are easy and abundant: Mahler's observation (recorded at
+\url{erdosproblems.com/365} and in \cite{bajpai2024}) is that the infinitely many
+solutions of $x^2=8y^2+1$ make $8y^2$ and $x^2$ consecutive powerful numbers. On
+the other hand Golomb \cite{golomb1970} exhibited $12167=23^3$ and
+$12168=2^3 3^2 13^2$, a consecutive powerful pair in which \emph{neither} term is a
+square --- refuting the guess that every such pair arises from a Pell equation.
+Walker's theorem that $7^3x^2=3^3y^2+1$ has infinitely many solutions
+(\url{erdosproblems.com/365}) then gives infinitely many such pairs. Consequently
+\emph{any Pell-based attack must justify why it covers all pairs}, and it does not.
+
+The best unconditional results concern triples \emph{centred at a cube},
+$(x^3-1,\,x^3,\,x^3+1)$, with restricted \emph{shapes} for the outer two terms:
+Chan \cite{chan2025} excludes $x^3-1=p^3y^2$, $x^3+1=q^3z^2$; She \cite{she2025}
+excludes $x^3-1=p^2a^3$, $x^3+1=q^2b^3$; Ma \cite{ma2026} excludes
+$x^n\mp1=q_{1,2}^3(\cdot)^2$ for $n\ge5$ all of whose prime factors are $5\bmod 8$;
+and Sayim \cite{sayim2026} excludes the two \emph{mixed} shapes
+$\{x^3-1=p^2a^3,\ x^3+1=q^3z^2\}$ and $\{x^3-1=p^3y^2,\ x^3+1=q^2b^3\}$.
+Together these close a $2\times2$ grid of shapes, all around a cube middle term.
+None addresses the general conjecture, which Ma states explicitly: ``It appears to be
+very hard and remains open.''
+
+\subsection{Contributions and honesty statement}
+
+The conjecture is \textbf{not} solved here. We obtain the following, with labels:
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{PROVED}: a complete characterisation of the local constraints
+(Theorem \ref{thm:local}, Corollary \ref{cor:counts}) and, in particular,
+\textbf{Theorem \ref{thm:nonempty}: no purely congruence argument can prove the
+conjecture}, because the locally admissible set is never empty.
+\item \textbf{PROVED}: structural constraints on a hypothetical triple
+(Theorem \ref{thm:struct}), an exact reformulation as a system of two generalised
+Pell equations (Proposition \ref{prop:pell}), a necessary condition for odd common
+difference (Theorem \ref{thm:odd}), and the exclusion of middle terms $2^{2^m}$
+(Theorem \ref{thm:fermat}).
+\item \textbf{PROVED FALSE}: the strategy ``$d_3$ is even'' is refuted by
+$(343,392,441)$ (Theorem \ref{thm:oddex}).
+\item \textbf{CONDITIONAL}: $abc$ with $\epsilon<1/3$ implies \emph{finiteness} of
+triples (Theorem \ref{thm:abc}). We stress that finiteness $\neq$ nonexistence.
+\item \textbf{COMPUTATIONALLY VERIFIED}: no triple below $10^{16}$; no cube-centred
+candidate below $x=2\cdot10^5$; reproduction of Beckon's mod-$36$ constraint and of
+the counts $39$ (mod $900$) and $1209$ (mod $44100$).
+\end{itemize}
+
+\section{The local theory}\label{sec:local}
+
+A congruence argument about powerful numbers sees only the residue class of $n$
+modulo a fixed modulus $M$. We therefore characterise exactly which residue classes
+survive the local conditions.
+
+\begin{definition}\label{def:admiss}
+Let $M\ge1$ and $r\in\mathbb Z/M\mathbb Z$. Call $r$ \emph{triple-admissible} if
+\[
+\forall p \ \text{prime with } p^2\mid M,\ \ \forall i\in\{0,1,2\}:\quad
+p \mid r+i \ \Longrightarrow\ p^2 \mid r+i .
+\]
+All congruences are read modulo $M$ (equivalently modulo $p^2$, which divides $M$).
+\end{definition}
+
+Powerfulness of $m$ implies $p\mid m \Rightarrow p^2\mid m$ for every prime $p$.
+Hence every $n$ whose class is triple-admissible passes all local tests at the
+primes $p$ with $p^2\mid M$.
+
+\begin{lemma}\label{lem:crt}
+Fix a prime $p$ and let
+\[ F_p=\bigl\{\,pt-i \bmod p^2\ :\ 1\le t\le p-1,\ i\in\{0,1,2\}\,\bigr\}.\]
+Then $F_p$ has exactly $3(p-1)$ elements.
+\end{lemma}
+
+\begin{proof}
+Suppose $pt-i\equiv pt'-i'\pmod{p^2}$ with $1\le t,t'\le p-1$ and
+$i,i'\in\{0,1,2\}$. Then $p(t-t')\equiv i-i'\pmod{p^2}$, hence $p\mid i-i'$. Since
+$|i-i'|\le2<p$, we get $i=i'$, and then $p\mid t-t'$ with
+$|t-t'|\le p-2<p$, so $t=t'$. Thus the $3(p-1)$ displayed residues are distinct.
+\end{proof}
+
+\begin{theorem}\label{thm:local}
+Write $M=\prod_{p} p^{k_p}$ and $S(M)=\prod_{p^2\mid M} p^2$. Then
+\[
+\#\{\text{triple-admissible classes mod }M\}
+=\frac{M}{S(M)}\prod_{p^2\mid M} c_p,
+\qquad
+c_2=1,\quad c_3=3,\quad c_p=p^2-3p+3\ \ (p\ge5).
+\]
+\end{theorem}
+
+\begin{proof}
+We count modulo each prime power $p^{k_p}$ with $k_p\ge2$; primes with $k_p=1$
+impose no condition. The forbidden classes mod $p^2$ are exactly $F_p$ from
+Lemma \ref{lem:crt}, together with nothing else: a class $r$ fails iff
+$p\mid r+i$ and $p^2\nmid r+i$ for some $i$, i.e.\ iff $r+i\equiv pt\pmod{p^2}$
+with $1\le t\le p-1$, i.e.\ iff $r\equiv pt-i$, i.e.\ $r\in F_p$.
+
+For $p=2$: $F_2=\{2,\,1,\,0\}\bmod 4$, so only $r\equiv3\bmod4$ survives and
+$c_2=1$. For $p=3$: $F_3=\{1,2,3,4,5,6\}\bmod9$, so $c_3=3$ (namely $0,7,8$).
+For $p\ge5$, Lemma \ref{lem:crt} gives $|F_p|=3(p-1)$ and
+$3(p-1)<p^2$ (as $p^2-3p+3=(p-1)(p-2)+1>0$), so $c_p=p^2-3p+3$.
+
+The $p$-conditions involve the residue mod $p^2$ only, and $\gcd(p^2,q^2)=1$ for
+distinct $p$, so the Chinese remainder theorem says the admissible classes mod
+$S(M)$ are exactly the products, and each lifts to exactly $M/S(M)$ classes mod $M$.
+\end{proof}
+
+\begin{corollary}\label{cor:counts}
+\begin{enumerate}[leftmargin=2em]
+\item There are exactly $1$, $3$, $39$ and $1209$ triple-admissible classes modulo
+$4$, $9$, $900$ and $44100$ respectively.
+\item The triple-admissible classes modulo $36$ are exactly
+\[\{7,\,27,\,35\},\]
+so if $n,n+1,n+2$ are powerful then
+\[n\equiv 7,\ 27\ \text{or } 35 \pmod{36}.\]
+\item The density of triple-admissible classes modulo $\prod_{p\le L}p^2$ is
+\[\delta(L)=\frac14\cdot\frac13\prod_{5\le p\le L}\left(1-\frac{3}{p}+\frac{3}{p^2}\right)\asymp(\log L)^{-3}.\]
+\end{enumerate}
+\end{corollary}
+
+Item 2 is the congruence constraint usually attributed to Beckon; item 1 and item 3
+coincide with counts and a decay rate stated by Sayim \cite{sayim2026}, who does not
+print the residue lists.
+
+\begin{theorem}[No local obstruction]\label{thm:nonempty}
+For every integer $M\ge1$ the set of triple-admissible classes modulo $M$ is
+non-empty.
+\end{theorem}
+
+\begin{proof}
+For each prime $p$ with $p^2\mid M$, Lemma \ref{lem:crt} and Theorem \ref{thm:local}
+show that at least one class survives: $c_2=1$, $c_3=3$, and $c_p=p^2-3p+3\ge1$ for
+$p\ge5$. Primes with $k_p=1$ impose nothing. The Chinese remainder theorem then
+combines one surviving class for each $p^2\mid M$ into a triple-admissible class
+modulo $S(M)$, which lifts to one modulo $M$.
+\end{proof}
+
+\begin{remark}\label{rem:whyitmatters}
+Theorem \ref{thm:nonempty} is a \emph{negative} theorem and it is worth being
+precise about what it says and does not say. It does \emph{not} say that a triple
+exists. It says: for every $M$ there is a residue class in which all the local
+necessary conditions at the primes $p\mid M$ hold simultaneously. Consequently
+\emph{any argument whose entire content is a statement about $n\bmod M$ for some
+fixed $M$ cannot prove the conjecture}, because such an argument must exclude every
+admissible class, and one always survives. Global input is unavoidable.
+\end{remark}
+
+\section{Structural constraints}\label{sec:struct}
+
+\begin{theorem}\label{thm:struct}
+Suppose $n$, $n+1$, $n+2$ are powerful, with canonical decompositions
+\[ n=a^2b^3,\qquad n+1=c^2d^3,\qquad n+2=e^2f^3, \]
+where $b,d,f$ are squarefree. Then:
+\begin{enumerate}[label=(\roman*),leftmargin=2.5em]
+\item $n\equiv3\pmod4$, $n+1\equiv0\pmod4$, $n+2\equiv1\pmod4$; in particular
+$n$ and $n+2$ are odd and $n$ is never a perfect square.
+\item $b\equiv3\pmod4$ (hence $b\ge3$) and $f\equiv1\pmod4$.
+\item $b,d,f$ are pairwise coprime; consequently at most one of $b,d,f$ equals $1$,
+i.e.\ at most one of $n,n+1,n+2$ is a perfect square.
+\item At most one of $n,n+1,n+2$ is a perfect cube.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i) If a powerful $m$ is even then $v_2(m)\ge2$, so $m\not\equiv2\pmod4$; hence
+\emph{no} powerful number is $\equiv2\pmod4$. Among $n,n+1,n+2$ with
+$n\not\equiv3\pmod4$ exactly one is $\equiv2\pmod4$: if $n$ is even then $n$ and
+$n+2$ differ by $2$ and one of them is $\equiv2\pmod4$; if $n$ is odd and
+$n\equiv1\pmod4$ then $n+1\equiv2\pmod4$. So $n\equiv3\pmod4$, whence
+$n+1\equiv0$ and $n+2\equiv1$.
+
+(ii) $n$ is odd, so $a$ and $b$ are odd. For odd $a$ we have $a^2\equiv1\pmod8$,
+and for odd $b$, $b^3\equiv b\pmod4$; hence $n=a^2b^3\equiv b\pmod4$, so
+$b\equiv3\pmod4$ and $b\ge3$. Likewise $n+2\equiv1\pmod4$ forces
+$f\equiv1\pmod4$.
+
+(iii) $\gcd(n,n+1)=\gcd(n+1,n+2)=1$. Also $\gcd(n,n+2)\mid 2$ and $n$ is odd by (i),
+so $\gcd(n,n+2)=1$. Hence $n,n+1,n+2$ are pairwise coprime. Since a prime dividing
+$b$ (resp.\ $d$, $f$) divides $n$ (resp.\ $n+1$, $n+2$), $\gcd(b,d)=\gcd(d,f)=
+\gcd(b,f)=1$. If two of $b,d,f$ equalled $1$ the corresponding two of
+$n,n+1,n+2$ would be perfect squares, which by (iii) and (iv) is impossible; hence
+at most one equals $1$.
+
+(iv) If $u^3,v^3$ are two of $n,n+1,n+2$ with $u<v$ then $v^3-u^3\ge (u+1)^3-u^3
+= 3u^2+3u+1\ge 7$ for $u\ge1$, contradicting that the difference is $1$ or $2$.
+\end{proof}
+
+\begin{lemma}\label{lem:st}
+$m\ge1$ is powerful if and only if $m=st^2$ with $s$ squarefree and $s\mid t$.
+\end{lemma}
+
+\begin{proof}
+If $m=a^2b^3$ with $b$ squarefree, set $s=b$, $t=ab$; then $m=st^2$ and
+$s=b\mid ab=t$. Conversely, if $m=st^2$, $s$ squarefree, $s\mid t$, put
+$a=t/s\in\mathbb Z_{>0}$ and $b=s$; then $m=a^2s^3=a^2b^3$ with $b$ squarefree,
+so $m$ is powerful by the characterisation $m$ powerful $\iff m=a^2b^3$ with $b$
+squarefree.
+\end{proof}
+
+\begin{proposition}\label{prop:pell}
+The Erdős--Mollin--Walsh conjecture is equivalent to the following system having no
+solution in squarefree $b,d,f$ and integers $U,V,W\ge1$:
+\[
+bV^2+1=dU^2,\qquad fW^2-dU^2=1,\qquad b\mid V,\quad d\mid U,\quad f\mid W .
+\]
+\end{proposition}
+
+\begin{proof}
+Forward: $n=bV^2$ with $V=ab$, $n+1=dU^2$ with $U=cd$, $n+2=fW^2$ with $W=ef$, by
+Lemma \ref{lem:st}. The two equations are just $n+1-n=1$ and $n+2-(n+1)=1$.
+Backward: the divisibilities give $a=V/b$, $c=U/d$, $e=W/f$ integers with
+$n=bV^2=a^2b^3$ etc., so all three are powerful by Lemma \ref{lem:st}.
+\end{proof}
+
+\begin{remark}
+Proposition \ref{prop:pell} is an \emph{equivalence}, not merely a necessary
+condition, which matters because it shows the difficulty precisely: it is a pair of
+generalised Pell equations \emph{sharing the middle term} $dU^2$. For fixed
+$(b,d)$ the first equation has either no solutions or infinitely many, so it carries
+no finite information on its own --- precisely the trap of assuming that a Pell
+parametrisation of one pair parametrizes a triple.
+\end{remark}
+
+\begin{proposition}\label{prop:closure}
+If $(u,u+1)$ are both powerful then so are $A=4u(u+1)$ and $B=(2u+1)^2$, and
+$B-A=1$.
+\end{proposition}
+
+\begin{proof}
+The product of powerful numbers is powerful and $4$ is powerful, so
+$A=4u(u+1)$ is powerful; $B$ is a square. $B-A=4u^2+4u+1-4u^2-4u=1$.
+\end{proof}
+
+\begin{theorem}\label{thm:quad}
+No four consecutive positive integers are all powerful.
+\end{theorem}
+
+\begin{proof}
+Among any four consecutive integers exactly one is $\equiv2\pmod4$, and by the
+observation in the proof of Theorem \ref{thm:struct}(i) no powerful number is
+$\equiv2\pmod4$.
+\end{proof}
+
+\begin{theorem}[odd common difference]\label{thm:odd}
+Let $d\ge1$ be odd and suppose $N$, $N+d$, $N+2d$ are all powerful. Then $N$ is odd
+and $N\equiv-d\pmod4$; in particular $4\mid N+d$ and the middle term is the even one.
+\end{theorem}
+
+\begin{proof}
+If $N$ were even then $N$ and $N+2d$ are both even and $N+2d-N=2d\equiv2\pmod4$,
+so exactly one of them is $\equiv2\pmod4$, contradicting their powerfulness. Hence
+$N$ is odd, $N+2d$ is odd, $N+d$ is even; and $N+d\not\equiv2\pmod4$, so
+$4\mid N+d$ and $N\equiv-d\pmod4$.
+\end{proof}
+
+\section{The $abc$ conjecture: finiteness, not nonexistence}\label{sec:abc}
+
+\begin{theorem}\label{thm:abc}
+Assume the $abc$ conjecture in the form: for every $\epsilon>0$ there is
+$\kappa(\epsilon)>0$ such that coprime $a,b,c\in\mathbb Z_{>0}$ with $a+b=c$ satisfy
+$c\le\kappa(\epsilon)\operatorname{rad}(abc)^{1+\epsilon}$. Then for every
+$0<\epsilon<1/3$ there are only \emph{finitely many} integers $n$ for which
+$n,n+1,n+2$ are all powerful.
+\end{theorem}
+
+\begin{proof}
+First, for powerful $m=a^2b^3$ with $b$ squarefree,
+\[ \operatorname{rad}(m)=\operatorname{rad}(ab)\le ab=\sqrt{m/b}\le\sqrt m .\]
+Suppose $n,n+1,n+2$ are powerful. Then $n,n+1,n+2$ are pairwise coprime (Theorem
+\ref{thm:struct}(iii)) and
+\[(n+1)^2=1+n(n+2)\]
+is an $abc$ relation with $(a,b,c)=(n(n+2),\,1,\,(n+1)^2)$. Moreover
+\[ \operatorname{rad}\big(n(n+1)(n+2)\big)
+=\prod_{i=0}^{2}\operatorname{rad}(n+i)\ \le\ \sqrt{n(n+1)(n+2)} .\]
+Hence
+\[(n+1)^2\ \le\ \kappa(\epsilon)\big(n(n+1)(n+2)\big)^{(1+\epsilon)/2}
+\ \le\ \kappa(\epsilon)\,(n+2)^{3(1+\epsilon)/2}.\]
+If $\epsilon<1/3$ then $3(1+\epsilon)/2<2$, so for $n$ large enough
+$\kappa(\epsilon)(n+2)^{3(1+\epsilon)/2}<(n+1)^2$, contradicting the displayed
+inequality. The set of such $n$ is therefore finite.
+\end{proof}
+
+\begin{remark}\label{rem:abc-not-enough}
+Theorem \ref{thm:abc} says \emph{finitely many}, and EMW says \emph{none}. The
+first does not imply the second: a finite non-empty set is compatible with both.
+To convert Theorem \ref{thm:abc} into EMW one would need \emph{either} an explicit
+$abc$ constant $\kappa(\epsilon)$, so that the bound above is small enough to search,
+\emph{or} an unconditional argument eliminating the finitely many survivors. We do
+not have either, and we flag this explicitly because the distinction is the single
+most common over-claim in discussions of this problem.
+\end{remark}
+
+The identity $(n+1)^2=1+n(n+2)$ is the $\ell=2$ instance of Lemma 3.1 of
+Bajpai--Bennett--Chan \cite{bajpai2024}, whose inequality (1.3) specialised to
+$(m,k)=(3,2)$ reads $d\gg N^{2/5-\epsilon}$; for $d=1$ this likewise bounds $N$. Our
+route keeps only the three radicals and yields the sharper threshold
+$\epsilon<1/3$. We also note that BBC's general statement is vacuous at $(m,k)=(3,2)$:
+their (1.2) exponent becomes $\frac{3(1-\frac12)-2}{3(1-\frac14)-2}=-2$.
+
+Relation to Erdős Problem \#137: if $n,n+1,n+2$ were all powerful then
+$n(n+1)(n+2)$ would be powerful, so no prime would divide it to exponent exactly $1$.
+Erdős conjectured \cite{erdos1982} that for fixed $k$ and $n$ large enough, some
+prime always divides $m(m+1)\cdots(m+k)$ to the first power only. Thus a
+counterexample to EMW would be a counterexample to that conjecture at $k=3$; the
+converse fails.
+
+\section{An infinite family excluded: middle terms $2^{2^m}$}\label{sec:fermat}
+
+\begin{theorem}\label{thm:fermat}
+For every integer $m\ge1$, the number $2^{2^m}-1$ is not powerful. Consequently no
+triple $\big(2^{2^m}-1,\;2^{2^m},\;2^{2^m}+1\big)$ of consecutive powerful numbers
+exists.
+\end{theorem}
+
+\begin{proof}
+Let $F_j=2^{2^j}+1$ be the $j$-th Fermat number. The standard identity
+$2^{2^m}-1=\prod_{j<m}F_j$ follows by repeatedly applying $x^2-1=(x-1)(x+1)$ with
+$x=2^{2^j}$. For $i<j$ we have $\prod_{k<i}F_k=F_i-2$, hence
+$\gcd(F_i,F_j)\mid \gcd(F_i-2,F_i)\mid2$; but $F_j$ is odd, so $\gcd(F_i,F_j)=1$.
+Every $F_j$ satisfies $F_j\ge3$, so in the product $\prod_{j<m}F_j$ each $F_j$ occurs
+with exponent exactly $1$; since $F_j>1$ it has a prime divisor occurring to
+exponent exactly $1$. Therefore $2^{2^m}-1$ is not powerful, and $2^{2^m}-1$ is the
+smaller of two consecutive integers, so it cannot be the first member of a powerful
+triple.
+\end{proof}
+
+\begin{proposition}\label{prop:wieferich}
+If $2^k-1$ is powerful then every prime $p\mid 2^k-1$ satisfies $p\mid k$ or
+$2^{p-1}\equiv1\pmod{p^2}$ (i.e.\ $p$ is Wieferich to base $2$).
+\end{proposition}
+
+\begin{proof}
+Let $p\mid 2^k-1$ be prime and put $r=\operatorname{ord}_p(2)$, so $r\mid k$. Since
+$2^k-1$ is powerful, $p^2\mid 2^k-1$, hence $\operatorname{ord}_{p^2}(2)\mid k$. Now
+$\operatorname{ord}_{p^2}(2)\in\{r,pr\}$. If $\operatorname{ord}_{p^2}(2)=pr$ then
+$p\mid k$. Otherwise $\operatorname{ord}_{p^2}(2)=r$, i.e.\ $2^r\equiv1\pmod{p^2}$;
+as $r\mid p-1$ we get $2^{p-1}\equiv1\pmod{p^2}$.
+\end{proof}
+
+\begin{remark}
+Prop.~\ref{prop:wieferich} is a complete necessary condition, and it shows where the
+$Mersenne$ subcase stalls: the bootstrap ``$3\mid k$, then $7\mid k$, then
+$127\mid k$, \dots'' halts precisely when a primitive prime divisor of $2^d-1$ is
+Wieferich, and the complete list of Wieferich primes base $2$ is unknown. As a
+\emph{conditional} consequence: if no primitive prime divisor of $2^d-1$ (for
+$d\mid k$, $d\ge3$, $d\ne6$) is Wieferich, then Zsigmondy's theorem gives pairwise
+distinct primes $p_d\equiv1\pmod d$, each of which must divide $k$ by
+Prop.~\ref{prop:wieferich}; counting, $\tau(k)\le\omega(k)+1+\mathbf 1_{6\mid k}$,
+and $\tau(k)\ge2^{\omega(k)}$ forces $\omega(k)\le2$. We record this as conditional
+and do not rely on it.
+\end{remark}
+
+\section{A falsified strategy: is $d_3$ even?}\label{sec:oddex}
+
+By Definition \ref{def:dm}, EMW is $d_3>1$. A clean sufficient condition would be:
+\emph{every three-term arithmetic progression of powerful numbers has even common
+difference}. We tested this claim by attempting to find a counterexample first.
+
+\begin{theorem}[the strategy is false]\label{thm:oddex}
+The numbers $343$, $392$, $441$ are all powerful and form an arithmetic progression
+with common difference $49$, which is odd.
+\end{theorem}
+
+\begin{proof}
+$343=7^3$; $392=2^3\cdot7^2$; $441=3^2\cdot7^2$; and $392-343=441-392=49$.
+\end{proof}
+
+\begin{theorem}\label{thm:oddex2}
+The numbers $169$, $256$, $343$ are all powerful and form an arithmetic progression
+with common difference $87$, which is odd.
+\end{theorem}
+
+\begin{proof}
+$169=13^2$; $256=2^8$; $343=7^3$; and $256-169=343-256=87$.
+\end{proof}
+
+\begin{remark}\label{rem:why-odd-d}
+Theorem \ref{thm:oddex} kills a plausible route to the conjecture, and the reason it
+does not work is instructive. The rigid mod-$4$ behaviour of Theorem
+\ref{thm:struct}(i) is a consequence of the three terms being \emph{consecutive}
+($d=1$). For general odd $d$ the only surviving constraint is Theorem \ref{thm:odd},
+namely $N$ odd and $4\mid N+d$, and that constraint is satisfiable. Concretely,
+$(7,8,9)$ is an arithmetic progression with $N=7$ odd and $8\equiv0\pmod4$; the
+missing factor is the powerfulness of $7$. Multiplying by $s=49$ fixes it: $49$ is
+powerful, $49\cdot7=7^3$ is powerful, and $49\cdot 8$, $49\cdot 9$ already are.
+More generally $(7,8,9)\cdot s$ is a powerful progression exactly when $49\mid s$ and
+$s$ is powerful, giving infinitely many odd common differences.
+\end{remark}
+
+Our search found $14$ odd-common-difference progressions with $N\le2\cdot10^5$
+(including $d\in\{49,87,141,147,175,225,275,343,363,433,441,487,549\}$) and none
+with odd $d<49$ for $N\le10^{10}$. The minimum odd $d$ observed is therefore $49$,
+but this is an empirical statement, not a theorem.
+
+\section{Computations}\label{sec:comp}
+
+All code is in this repository; see \texttt{docs/reproducibility.md} for exact
+commands and \texttt{results/} for raw output.
+
+\subsection{Predicates}
+
+Three implementations of the powerfulness predicate are provided and
+cross-validated: trial division, \texttt{sympy.factorint}, and a \emph{certified}
+fast test. The certified test is a decision procedure, not a heuristic: for
+$n\le B^3$, divide out every prime $\le B$ with full multiplicity; the residual
+cofactor $c$ then has all prime factors $>B$, so $c$ can have at most two of them,
+and $n$ is powerful iff $c=1$ or $c$ is the square of a prime $>B$ (its primality
+being certified by trial division, cheap because $\sqrt c\le B$). It agrees with
+full factorisation on $4073$ tested values with zero disagreements.
+
+\subsection{Exhaustive search to $10^{16}$}\label{sec:scale}
+
+The search exploits Theorem \ref{thm:struct}: a triple forces $n\equiv3\bmod4$, and
+for odd powerful $m=a^2b^3$ we have $m\equiv b\pmod4$. Hence, with
+\[P_3=\{a^2b^3\le X+2 : a \text{ odd},\ b \text{ odd squarefree},\ b\equiv3\!\!\pmod4\},\quad
+P_1=\{a^2b^3\le X+2 : a \text{ odd},\ b \text{ odd squarefree},\ b\equiv1\!\!\pmod4\},\]
+a triple with $n\le X$ exists iff $P_3\cap(P_1-2)$ contains an $n$ with $n+1$
+powerful. This is complete by Theorem \ref{thm:struct} and the uniqueness of the
+$a^2b^3$ decomposition, and it costs $O(\sqrt X)$ numbers instead of $O(X)$.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{rrr}
+\toprule
+$N$ & \text{powerful numbers generated} & \text{triples found}\\
+\midrule
+$10^{9}$  & 25\,019     & none\\
+$10^{10}$ & 79\,487     & none\\
+$10^{11}$ & 252\,163    & none\\
+$10^{12}$ & 799\,138    & none\\
+$10^{13}$ & 2\,530\,755  & none\\
+$10^{14}$ & 8\,010\,922  & none\\
+$10^{15}$ & 25\,349\,939 & none\\
+$10^{16}$ & 80\,200\,497 & none\\
+\bottomrule
+\end{tabular}
+\caption{Exhaustive search for $n\le N$ with $n,n+1,n+2$ powerful. Total wall time
+for $N=10^{16}$: $5.3$ s. This is a bounded computation, not a proof.}
+\end{table}
+
+The only two integers that survive the weaker test ``$n$ and $n+2$ powerful'' below
+$10^{16}$ are $130576327$ and $13837575261123$ --- the third and fifth terms of OEIS
+A076445 --- and in both cases the middle term is not powerful. We verified this by
+full factorisation; note this is exactly the bug documented in
+\texttt{research/falsification\_log.md} (F1), where an earlier version of the search
+omitted the middle-term test and wrongly reported these as triples.
+
+\subsection{Other verifications}
+
+* Beckon's constraint $n\equiv7,27,35\pmod{36}$ reproduced; counts $39$ and $1209$
+  modulo $900$ and $44100$ reproduced; $\delta(L)(\log L)^3$ computed as
+  $3.41,\,4.59,\,4.84,\,4.85$ at $L=11,101,1009,1999$, confirming the
+  $\asymp(\log L)^{-3}$ rate.
+* Reproduced the first terms of OEIS A076445 ($25,70225,130576327$) and of A060355
+  (consecutive powerful pairs below $5\cdot10^5$), including Golomb's
+  $(12167,12168)$ and the non-square pair $(465124,465125)=(682^2,5^3\cdot61^2)$,
+  the latter predicted from the negative Pell equation $x^2-125y^2=-1$.
+* No cube-centred candidate triple $(x^3-1,x^3,x^3+1)$ for $x\le2\cdot10^5$;
+  counts of the Chan/She/Sayim shapes recorded for $x\le2\cdot10^4$.
+* $2^k-1$ is not powerful for every $2\le k\le250$ (exact factorisation).
+
+\subsection{Independent checks of the literature}
+
+We re-derived, rather than copied:
+
+* the five Mordell integral-point lists used by Sayim \cite{sayim2026}
+  ($k\in\{2,-2,54,-54,-162\}$), searched $|x|\le2\cdot10^6$;
+* the torsion of $E: y^2=x^3-81x+243$ (Cremona 1296f2 / LMFDB 1296.k1), the curve
+  whose rank-0 property is the single non-elementary input to Sayim's Theorem 2. We
+  \emph{certified} $\ E(\mathbb Q)_{\mathrm{tors}}=\{\mathcal O\}$ by a complete
+  Nagell--Lutz check: $4A^3+27B^2=-3^{12}$, so a torsion point has $y=0$ or
+  $y=\pm3^j$, $0\le j\le6$, and hence $0\le x^3-81x+243\le 3^{12}$, which forces
+  $-10\le x\le 81$; no such $x$ in that range yields a square. We did
+  \emph{not} re-verify the rank-0 computation (no PARI/GP or SageMath available here);
+  it is corroborated by the LMFDB record;
+* the Pell recurrence $z_{k+1}=14z_k-z_{k-1}+6$, $(z_0,z_1)=(-2,1)$, encoding the
+  integer solutions of $z^2+z+1=3w^2$ (via $b^2-3c^2=1$ with $b=2w$, $3c=2z+1$).
+  Recurrence index $j$ corresponds to the odd power $(2+\sqrt3)^{2j-1}=b_j+c_j\sqrt3$
+  with $z_j=(3c_j-1)/2$; the two agree at 8 consecutive indices, and the only cube in
+  the orbit for $j\le2000$ is $z_1=1$ (largest $|z_j|$ has $2287$ digits).
+
+We also attempted an independent elementary proof of
+$t^6+t^3+1=3w^2\Rightarrow t=1$. Setting $x=t^3$, LTE gives
+$v_3(x^2+x+1)=1$ and $3\nmid w$; in $\mathbb Z[\omega]$ the element
+$\alpha=\frac{2t^3+1}{3}+\frac{t^3-1}{3}\omega$ satisfies
+$N(\alpha)=w^2$ with $\gcd(\alpha,\bar\alpha)=1$, so $\alpha=\varepsilon\gamma^2$.
+For the unit class $\varepsilon=\pm1$, writing $\gamma=u+v\omega$ and comparing
+coefficients yields $u^2-4uv=1$, hence $u=\pm1$, $v=0$ and $t=1$. The classes
+$\varepsilon=\omega,\omega^2$ reduce to $(v+u)^2-3u^2=1$ together with
+$t^3=3s(s-2u)-2$, which we could not resolve. We therefore report this as a
+\emph{partial} descent and do not claim an independent proof of Sayim's Theorem 2.
+
+\section{Failed approaches and limitations}
+
+Summarised here; the full log with counterexamples is in
+\texttt{research/falsification\_log.md}.
+
+1. \textbf{Mod-4 extrapolation from the quadruple case.} It kills four consecutive
+   powerful numbers but not three: three consecutive residue classes can avoid
+   $2\bmod4$ (Theorem \ref{thm:struct}(i) only forces $n\equiv3\pmod4$).
+2. \textbf{Jacobi-symbol reciprocity between $b,d,f$.} The six conditions
+   $(d/b)=1$, $(b/d)=(-1/d)$, $(f/d)=1$, $(d/f)=(-1/f)$, $(f/b)=(2/b)$, $(b/f)=(-2/f)$
+   are mutually \emph{consistent}; reciprocity closes on itself and yields nothing
+   beyond Theorem \ref{thm:struct}(ii).
+3. \textbf{Parity of the common difference.} Falsified, Theorem \ref{thm:oddex}.
+4. \textbf{Descent on a pair.} Impossible: Proposition \ref{prop:closure} shows the
+   set of consecutive powerful pairs is closed upwards, so no descent on a pair
+   terminates.
+5. \textbf{Pell parametrisation.} Does not cover all pairs (Golomb, Walker).
+6. \textbf{$abc$ implies EMW.} False as an inference (Remark \ref{rem:abc-not-enough}).
+7. \textbf{Unconditional radical bounds.} Would need to replace $abc$ itself.
+8. \textbf{Bootstrapping on Mersenne numbers.} Stalls at Wieferich primes.
+
+##{Relationship to the $abc$ conjecture}
+
+Discussed in \S\ref{sec:abc} and Remark \ref{rem:abc-not-enough}. Summary: $abc$ in
+the $\epsilon<1/3$ regime implies finiteness of powerful triples, via the identity
+$(n+1)^2=1+n(n+2)$ and the sharp bound $\operatorname{rad}(m)\le\sqrt m$ with
+$\operatorname{rad}(a^2b^3)=ab=\sqrt{m/b}$. It does not imply nonexistence, and no
+unconditional substitute for $abc$ is known.
+
+\section{Open questions}
+
+\begin{enumerate}[leftmargin=2em]
+\item The Erdős--Mollin--Walsh conjecture itself.
+\item Is $d_3 = 24$? (Bajpai--Bennett--Chan's conjecture; our searches never find
+$d<24$.)
+\item Erdős Problem \#938: are there only finitely many three-term progressions of
+\emph{consecutive} powerful numbers $n_k,n_{k+1},n_{k+2}$? van Doorn \cite{vandoorn2026}
+shows infinitely many 3-term progressions $N,N+d,N+2d$ of powerful numbers with
+$d=2\sqrt N+1$ and conjectures infinitely many of them are consecutive in the
+powerful sequence, which would answer \#938 negatively.
+\item Are there infinitely many odd common differences for 3-term progressions of
+powerful numbers? Theorem \ref{thm:oddex2} and Remark \ref{rem:why-odd-d} show yes.
+\item Can the squarefree parameters $b,d,f$ be bounded?
+\end{enumerate}
+
+\section{Conclusion}
+
+The Erdős--Mollin--Walsh conjecture remains unsolved by this investigation. We have
+(a) proved that its local constraints are always simultaneously satisfiable, so that
+congruence methods are structurally incapable of settling it; (b) proved several
+unconditional structural results, including the exclusion of all triples whose middle
+term is $2^{2^m}$ and a complete necessary condition for $2^k-1$ to be powerful;
+(c) falsified, with an explicit counterexample, a natural route to the conjecture;
+(d) given a complete and self-contained derivation of the $abc$-conditional finiteness
+result with a sharp exponent, while stating explicitly why it does not give
+nonexistence; and (e) verified exhaustively and by two cross-validated
+implementations that no triple exists below $10^{16}$. No part of (a)--(e) settles the
+conjecture.
+
+\bibliographystyle{plain}
+\begin{thebibliography}{99}
+\bibitem{golomb1970} S.~W. Golomb. Powerful numbers. \emph{Amer.\ Math.\ Monthly}, 77(8):848--852, 1970.
+\bibitem{erdos1976cn} P.~Erd\H{o}s. Problems and results on number theoretic properties of consecutive integers and related questions. In \emph{Proc.\ Fifth Manitoba Conf.\ on Numerical Mathematics}, \emph{Congress.\ Numer.\ XVI}, 25--44, 1976.
+\bibitem{erdos1976pmd} P.~Erd\H{o}s. Problems and results on consecutive integers. \emph{Publ.\ Math.\ Debrecen}, 23(3--4):271--282, 1976. (Discusses pairs, not triples.)
+\bibitem{erdos1982} P.~Erd\H{o}s. Reported in Erd\H{o}s Problems \#137, entry \texttt{[Er82c]}.
+\bibitem{mollinwalsh1986a} R.~A. Mollin, P.~G. Walsh. A note on powerful numbers, quadratic fields and the Pellian. \emph{C.\ R.\ Math.\ Rep.\ Acad.\ Sci.\ Canada}, 8:109--114, 1986.
+\bibitem{mollinwalsh1986b} R.~A. Mollin, P.~G. Walsh. On powerful numbers. \emph{Internat.\ J.\ Math.\ \& Math.\ Sci.}, 9(4):801--806, 1986.
+\bibitem{bajpai2024} P.~Bajpai, M.~A. Bennett, T.~H. Chan. Arithmetic progressions in squarefull numbers. arXiv:2302.03113; \emph{Int.\ J.\ Number Theory}, 20 (2024).
+\bibitem{chan2025} T.~H. Chan. A note on three consecutive powerful numbers. arXiv:2503.21485; \emph{Integers}, 25 (2025), Paper A7.
+\bibitem{she2025} J.~She. Nonexistence of consecutive powerful triplets around cubes with prime-square factors. arXiv:2507.16828; \emph{Integers}, 25 (2025), Paper A103.
+\bibitem{ma2026} W.~Ma. An elementary note on three consecutive powerful numbers. arXiv:2608.23418, 2026. Preprint.
+\bibitem{sayim2026} B.~Y. Sayim. Nonexistence of consecutive powerful triplets around cubes with mixed prime factorizations. Zenodo 10.5281/zenodo.22699364 (v1.3), 2026. Preprint.
+\bibitem{vandoorn2026} W.~van Doorn. Three-term arithmetic progressions of consecutive powerful numbers. arXiv:2605.06697, 2026. Preprint.
+\bibitem{mian2026} I.~Mian, S.~Siddique. A kernel-certified verification of the Erd\H{o}s--Mollin--Walsh conjecture below $10^{14}$. arXiv:2609.25011, 2026. Preprint.
+\bibitem{oeisA076445} OEIS A076445, ``The smaller of a pair of powerful numbers that differ by 2''.
+\bibitem{oeisA060355} OEIS A060355, numbers $n$ with $n$ and $n+1$ both powerful.
+\bibitem{erdosproblems} Erd\H{o}s Problems database, entries \#137, \#364, \#365, \#938.
+\end{thebibliography}
+
+\end{document}
