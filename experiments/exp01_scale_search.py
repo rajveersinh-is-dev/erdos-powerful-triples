@@ -17,25 +17,45 @@ powerful numbers generated and a checksum, so the run is auditable/reproducible.
 
 from __future__ import annotations
 
-import _bootstrap  # noqa: F401  (puts <repo>/src on sys.path; write_result)
-
 import json
 import sys
 import time
 
+from powerful_triples.predicates import is_powerful_trial
+from powerful_triples.scale import generate_odd_powerful_class
+import _bootstrap  # noqa: F401  (puts <repo>/src on sys.path; write_result)
 import numpy as np
 
-from powerful_triples.scale import generate_odd_powerful_class
-from powerful_triples.predicates import is_powerful_trial
+
+
+
 
 MOD = 1_000_003
 
 
 def checksum(arr) -> int:
+    """Checksum.
+    
+    Args:
+        arr:
+    
+    Returns:
+        int: Result of type int
+    
+    """
     return int(np.sum(arr % np.int64(MOD)) % np.int64(MOD))
 
 
 def main(bounds: list[int]) -> int:
+    """Entry point — parse arguments and run the main computation.
+    
+    Args:
+        bounds:
+    
+    Returns:
+        int: Result of type int
+    
+    """
     rows = []
     for N in bounds:
         t0 = time.perf_counter()
@@ -71,7 +91,7 @@ def main(bounds: list[int]) -> int:
         )
         del p3, p1, cand
     path = _bootstrap.write_result("scale_search.json", rows)
-    print("wrote %s" % path)
+    print(f"wrote {path}")
     return 0
 
 
