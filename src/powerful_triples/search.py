@@ -58,6 +58,12 @@ class SearchResult:
     notes: str = ""
 
     def as_dict(self) -> dict:
+        """As dict.
+        
+        Returns:
+            dict: Result of type dict
+        
+        """
         return {
             "method": self.method,
             "bound": self.bound,
@@ -85,6 +91,8 @@ def verify_triple(n: int) -> tuple[bool, str]:
 
 
 # --------------------------------------------------------------------------- A
+
+
 def search_direct(limit: int) -> SearchResult:
     """Method A: test n, n+1, n+2 for every 1 <= n <= limit with the exact predicate."""
     t0 = time.perf_counter()
@@ -105,6 +113,8 @@ def search_direct(limit: int) -> SearchResult:
 
 
 # --------------------------------------------------------------------------- B
+
+
 def search_generated(limit: int) -> SearchResult:
     """Method B: enumerate ALL powerful numbers <= limit+2, scan for 3-consecutive runs.
 
@@ -128,7 +138,15 @@ def search_generated(limit: int) -> SearchResult:
 
 
 # --------------------------------------------------------------------------- C
+
+
 def reformulation() -> str:
+    """Reformulation.
+    
+    Returns:
+        str: Result of type str
+    
+    """
     return (
         "A positive integer m is powerful iff m = s*t^2 with s squarefree and s | t.  "
         "Given n = a^2 b^3 with b squarefree, set V = a*b; then n = b*V^2 and b | V.  "
@@ -195,6 +213,15 @@ def search_parameters(bmax: int, dmax: int, vmax: int, wmax: int) -> SearchResul
 
 
 def _isqrt_exact(q: int) -> int | None:
+    """Isqrt exact.
+    
+    Args:
+        q:
+    
+    Returns:
+        The computed result
+    
+    """
     import math
 
     if q < 0:
@@ -204,6 +231,8 @@ def _isqrt_exact(q: int) -> int | None:
 
 
 # --------------------------------------------------------------------------- D
+
+
 def search_modular(limit: int, modulus: int) -> SearchResult:
     """Method D: exact local pre-screen mod M, then exact testing of survivors."""
     t0 = time.perf_counter()
@@ -230,6 +259,8 @@ def search_modular(limit: int, modulus: int) -> SearchResult:
 
 
 # --------------------------------------------------------------------------- E
+
+
 def search_smt(amax: int, bmax: int, timeout_ms: int = 120_000) -> SearchResult:
     """Method E: z3 SMT search for integer solutions of the two equations in a box.
 
@@ -288,6 +319,8 @@ def search_smt(amax: int, bmax: int, timeout_ms: int = 120_000) -> SearchResult:
 
 
 # --------------------------------------------------------------------------- extras
+
+
 def consecutive_pairs_leq(limit: int) -> list[tuple[int, int]]:
     """All pairs (u, u+1) of powerful numbers with u+1 <= limit."""
     pwf = powerful_leq(int(limit))
