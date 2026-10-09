@@ -48,12 +48,18 @@ X_SHAPE = 20000
 X_CUBE = 200000
 
 
-def c1_c2():
+def c1_c2() -> dict:
+    """C1 c2.
+    
+    Returns:
+        dict: Result of type dict
+    
+    """
     print("=" * 78)
     print("C1/C2  local residue constraints")
     print("=" * 78)
     r36 = triple_admissible_residues(36)
-    print("triple-admissible classes mod 36    : %s" % r36)
+    print(f"triple-admissible classes mod 36    : {r36}")
     print("Beckon's constraint (n in {7,27,35}) reproduced: %s"
           % (r36 == [7, 27, 35]))
     for M, claimed in ((900, 39), (44100, 1209)):
@@ -80,7 +86,13 @@ def c1_c2():
             "density_samples": [[p, pr, lg, scaled] for p, pr, lg, scaled in samples]}
 
 
-def c3():
+def c3() -> dict:
+    """C3.
+    
+    Returns:
+        dict: Result of type dict
+    
+    """
     print("")
     print("=" * 78)
     print("C3  closure lemma for consecutive powerful pairs")
@@ -90,17 +102,18 @@ def c3():
     S = set(powerful_leq(5000))
     pairs = [u for u in S if u + 1 in S]
     rows = []
-    for u in sorted(pairs)[:8]:
+    for u in sorted(pairs)[:
+        8]:
         A, B = 4 * u * (u + 1), (2 * u + 1) ** 2
         rows.append((u, u + 1, A, B, B - A, is_powerful_sympy(A), is_powerful_sympy(B)))
         print("  (%d, %d) -> (%d, %d)   B-A = %d   both powerful: %s"
               % (u, u + 1, A, B, B - A, is_powerful_sympy(A) and is_powerful_sympy(B)))
     allok = all(r[4] == 1 and r[5] and r[6] for r in rows)
-    print("  closure verified for all listed pairs: %s" % allok)
+    print(f"  closure verified for all listed pairs: {allok}")
     return {"pairs_checked": len(rows), "all_ok": allok}
 
 
-def _shape_of(m):
+def _shape_of(m) -> str:
     """Classify a powerful m as 'p^3 y^2', 'p^2 y^3' or None.
 
     m = p^3 y^2 with p prime  <=>  there is a prime p with v_p(m) >= 3 and
@@ -122,7 +135,7 @@ def _shape_of(m):
     return None
 
 
-def _powerful_fast(m, primes):
+def _powerful_fast(m, primes) -> bool:
     """Rigorous test: True / False, using only primes in `primes` unless forced
     to do a full factorisation.  Never guesses."""
     r = m
@@ -143,7 +156,13 @@ def _powerful_fast(m, primes):
     return all(e >= 2 for _p, e in factor_sympy(r))
 
 
-def c4():
+def c4() -> dict:
+    """C4.
+    
+    Returns:
+        dict: Result of type dict
+    
+    """
     print("")
     print("=" * 78)
     print("C4  the four excluded 'shape' families around a cube")
@@ -169,9 +188,9 @@ def c4():
             both_powerful.append(x)
         if sm and sp:
             both_shape.append((x, sm, sp))
-    print("  x <= %d : x^3-1 powerful of the stated shape : %s" % (X_SHAPE, minus_counts))
-    print("  x <= %d : x^3+1 powerful of the stated shape : %s" % (X_SHAPE, plus_counts))
-    print("  x <= %d : BOTH x^3-1 and x^3+1 powerful     : %s" % (X_SHAPE, both_powerful))
+    print(f"  x <= {X_SHAPE} : x^3-1 powerful of the stated shape : {minus_counts}")
+    print(f"  x <= {X_SHAPE} : x^3+1 powerful of the stated shape : {plus_counts}")
+    print(f"  x <= {X_SHAPE} : BOTH x^3-1 and x^3+1 powerful     : {both_powerful}")
     print("  x <= %d : both outer terms of a Chan/She/Sayim shape : %s"
           % (X_SHAPE, both_shape))
     print("  (%.1fs)" % (time.perf_counter() - t0))
@@ -193,14 +212,20 @@ def c4():
             "cube_centred_candidates": cubes, "x_cube_bound": X_CUBE}
 
 
-def c5():
+def c5() -> dict:
+    """C5.
+    
+    Returns:
+        dict: Result of type dict
+    
+    """
     print("")
     print("=" * 78)
     print("C5  Nagell-Lutz: torsion of E : y^2 = x^3 - 81x + 243")
     print("=" * 78)
     A, B = -81, 243
     four_a3_plus_27b2 = 4 * A ** 3 + 27 * B ** 2
-    print("  4A^3 + 27B^2 = %d = 3^%d" % (four_a3_plus_27b2, 12))
+    print(f"  4A^3 + 27B^2 = {four_a3_plus_27b2} = 3^{12}")
     pts = []
     for j in range(0, 7):                       # y = +-3^j, j <= 6
         y2 = 3 ** (2 * j)
@@ -214,8 +239,8 @@ def c5():
             pts.append((xx, 3 ** j))
     # y = 0 case
     roots = [xx for xx in range(-400, 401) if xx ** 3 - 81 * xx + 243 == 0]
-    print("  integer solutions with y = 0 (2-torsion) : %s" % roots)
-    print("  integer solutions with y = +-3^j, 0<=j<=6 : %s" % pts)
+    print(f"  integer solutions with y = 0 (2-torsion) : {roots}")
+    print(f"  integer solutions with y = +-3^j, 0<=j<=6 : {pts}")
     print("  => E(Q)_tors = { O }  (Nagel-Lutz, certified by exhaustive check) : %s"
           % (not roots and not pts))
     print("  NOTE: the RANK of E is a separate input; it is NOT verified here.")
@@ -223,6 +248,12 @@ def c5():
 
 
 def c6():
+    """C6.
+    
+    Returns:
+        The computed result
+    
+    """
     print("")
     print("=" * 78)
     print("C6  integral points of y^2 = x^3 + k,  k in {2,-2,54,-54,-162}")
@@ -248,13 +279,22 @@ def c6():
         match = found == sorted(set(cl + [(-x, y) for x, y in cl if (x, -y) not in found
                                           and (-x, y) not in cl]))
         print("  k=%-5d claimed %-28s found in |x|<=%d : %s"
-              % (k, str(cl), lim, found if len(found) <= 12 else "%d points" % len(found)))
+              % (k, str(cl), lim, found if len(found) <= 12 else f"{len(found)} points"))
         out[str(k)] = {"claimed": cl, "found_up_to": lim, "found": found[:50],
                        "n_found": len(found)}
     return out
 
 
 def c7(kmax: int = 2000):
+    """C7.
+    
+    Args:
+        kmax (int):
+    
+    Returns:
+        dict: Result of type dict
+    
+    """
     print("")
     print("=" * 78)
     print("C7  Pell orbit z_{k+1} = 14 z_k - z_{k-1} + 6,  (z_0,z_1) = (-2,1)")
@@ -273,7 +313,7 @@ def c7(kmax: int = 2000):
     for j in range(8):
         j += 1                                   # 1-based
         direct = (3 * ck - 1) // 2
-        checks.append(("recurrence index j=%d (power %d)" % (j, 2 * j - 1), direct, zs[j - 1]))
+        checks.append((f"recurrence index j={j} (power {2 * j - 1})", direct, zs[j - 1]))
         bk, ck = (2 * bk + 3 * ck, bk + 2 * ck)  # square the unit -> skip to next odd power
         # after squaring we have (2+sqrt3)^(2j); square once more for 2j+1 handled
         # by the loop invariant below
@@ -282,7 +322,7 @@ def c7(kmax: int = 2000):
         print("   %-38s direct z = %-20d recurrence z = %-20d agree=%s"
               % (name, direct, rec, direct == rec))
     agree = all(d == r_ for _n, d, r_ in checks)
-    print("   recurrence cross-check agrees at every tested index: %s" % agree)
+    print(f"   recurrence cross-check agrees at every tested index: {agree}")
     cubes = []
     biggest = 0
     for i, v in enumerate(zs, start=1):
@@ -297,8 +337,8 @@ def c7(kmax: int = 2000):
             rn = math.isqrt(neg)
             if rn * rn == neg:
                 cubes.append((i, neg, rn))
-    print("  cubes z_k = t^3 found for k <= %d : %s" % (kmax, cubes))
-    print("  largest |z_k| examined has %d decimal digits" % len(str(biggest)))
+    print(f"  cubes z_k = t^3 found for k <= {kmax} : {cubes}")
+    print(f"  largest |z_k| examined has {len(str(biggest))} decimal digits")
     return {"cubes": cubes, "kmax": kmax, "largest_digits": len(str(biggest)),
             "recurrence_agrees": agree,
             "checks": [[n, d, r_, d == r_] for n, d, r_ in checks]}
@@ -314,4 +354,4 @@ if __name__ == "__main__":
     res["c7"] = c7()
     path = _bootstrap.write_result("exp04_literature_checks.json", res)
     print("")
-    print("wrote %s" % path)
+    print(f"wrote {path}")
