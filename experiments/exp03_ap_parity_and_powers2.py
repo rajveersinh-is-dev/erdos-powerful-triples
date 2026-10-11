@@ -34,13 +34,19 @@ def verify_ap(n, d):
         m = n + off
         fac = factor_sympy(m)
         out[str(m)] = {
-            "factorization": "*".join("%s^%d" % (p, e) for p, e in fac),
+            "factorization": "*".join(f"{p}^{e}" for p, e in fac),
             "powerful": all(e >= 2 for _p, e in fac),
         }
     return out
 
 
 def part_a():
+    """Part a.
+    
+    Returns:
+        The computed result
+    
+    """
     print("=" * 78)
     print("PART A -- is d_3 even?")
     print("=" * 78)
@@ -72,7 +78,7 @@ def part_a():
             if (m - d) in S and (m + d) in S:
                 odd_d_hits[d] = m
     print("")
-    print("All 3-term APs of powerful numbers with ODD d < 49 and N <= %d:" % L)
+    print(f"All 3-term APs of powerful numbers with ODD d < 49 and N <= {L}:")
     if odd_d_hits:
         for d in sorted(odd_d_hits):
             print("   d = %3d (odd), middle term m = %d" % (d, odd_d_hits[d]))
@@ -102,6 +108,12 @@ def part_a():
 
 
 def part_b():
+    """Part b.
+    
+    Returns:
+        The computed result
+    
+    """
     print("")
     print("=" * 78)
     print("PART B -- middle term a power of 2")
@@ -124,9 +136,9 @@ def part_b():
     )
     coprime_ok = all(gcd(F[i], F[j]) == 1 for i in range(16) for j in range(i + 1, 16))
     gt1_ok = all(f > 1 for f in F)
-    print("Fermat identity  prod_{j<m} F_j = 2^(2^m)-1  for m=1..12 : %s" % ident_ok)
-    print("Fermat numbers pairwise coprime (j <= 15)                : %s" % coprime_ok)
-    print("every F_j > 1                                           : %s" % gt1_ok)
+    print(f"Fermat identity  prod_{{j<m}} F_j = 2^(2^m)-1  for m=1..12 : {ident_ok}")
+    print(f"Fermat numbers pairwise coprime (j <= 15)                : {coprime_ok}")
+    print(f"every F_j > 1                                           : {gt1_ok}")
 
     direct = {}
     for m in range(1, 8):
@@ -150,7 +162,7 @@ def part_b():
     for k in (3, 6, 21):
         n = 2 ** k - 1
         fac = factor_sympy(n)
-        print("  k=%3d: 2^k-1 = %s" % (k, "*".join("%s^%d" % (p, e) for p, e in fac)))
+        print("  k=%3d: 2^k-1 = %s" % (k, "*".join(f"{p}^{e}" for p, e in fac)))
         for p, e in fac:
             pp = p * p
             o = 1
@@ -163,7 +175,7 @@ def part_b():
                   % (p, e, o, pk, verdict))
     ok = (ident_ok and coprime_ok and gt1_ok and not viol
           and not any(v["powerful"] for v in direct.values()))
-    print("PART B verdict: %s" % ("PASS" if ok else "FAIL"))
+    print(f"PART B verdict: {...}")
     return 0 if ok else 1
 
 
@@ -172,5 +184,5 @@ if __name__ == "__main__":
     part_b()
     path = _bootstrap.write_result("exp03_ap_and_powers2.json", r)
     print("")
-    print("wrote %s" % path)
+    print(f"wrote {path}")
     raise SystemExit(0)
