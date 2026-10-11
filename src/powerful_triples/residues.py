@@ -36,8 +36,7 @@ CRT, so
 
 from __future__ import annotations
 
-from math import gcd
-from typing import Iterator
+
 
 __all__ = [
     "factor_modulus",
@@ -81,6 +80,16 @@ def _crt(r1: int, m1: int, r2: int, m2: int) -> tuple[int, int]:
 
 
 def _egcd(a: int, b: int) -> tuple[int, int, int]:
+    """Egcd.
+    
+    Args:
+        a:
+        b:
+    
+    Returns:
+        tuple: Result of type tuple
+    
+    """
     old_r, r = a, b
     old_s, s = 1, 0
     while r != 0:

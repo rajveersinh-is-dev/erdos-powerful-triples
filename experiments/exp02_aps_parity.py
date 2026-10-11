@@ -25,12 +25,14 @@ What is actually computed here (all bounded, none of it a proof):
 
 from __future__ import annotations
 
-import _bootstrap  # noqa: F401  (puts <repo>/src on sys.path; write_result)
-
 import json
 import time
 
-from powerful_triples.predicates import is_powerful_trial, powerful_leq
+from powerful_triples.predicates import powerful_leq
+import _bootstrap  # noqa: F401  (puts <repo>/src on sys.path; write_result)
+
+
+
 
 
 def search_aps(limit_n: int, max_d: int) -> dict:
@@ -69,6 +71,12 @@ def search_aps(limit_n: int, max_d: int) -> dict:
 
 
 def main() -> int:
+    """Entry point — parse arguments and run the main computation.
+    
+    Returns:
+        int: Result of type int
+    
+    """
     out = {}
     t0 = time.perf_counter()
     # 1. Small bound, both methods, generous d  -> find d_3 and look for odd d.
@@ -103,7 +111,7 @@ def main() -> int:
 
     out["elapsed_s"] = round(time.perf_counter() - t0, 2)
     path = _bootstrap.write_result("exp02_aps.json", out)
-    print("wrote %s" % path)
+    print(f"wrote {path}")
     return 0
 
 

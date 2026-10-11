@@ -16,12 +16,14 @@ bounds reachable: only O(sqrt(X)/2) numbers per set are generated, not O(X).
 
 from __future__ import annotations
 
-import time
 from dataclasses import dataclass
-
-import numpy as np
+import time
 
 from .predicates import is_powerful_trial, squarefree_leq
+import numpy as np
+
+
+
 
 __all__ = [
     "ScaleResult",
@@ -43,6 +45,15 @@ class ScaleResult:
 
 
 def _cube_root_floor(x: int) -> int:
+    """Cube root floor.
+    
+    Args:
+        x:
+    
+    Returns:
+        The computed result
+    
+    """
     lo, hi = 0, 1
     while hi ** 3 <= x:
         hi *= 2
